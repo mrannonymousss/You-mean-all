@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Girlfriend</title>
+    <style>
+        :root {
+            --bg-sage: #d7e4d8;
+            --card-white: #f8f9f8;
+            --text-gray: #4a4a4a;
+            --stem-green: #7ca67c;
+        }
+
+        body {
+            margin: 0;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .canvas-frame {
+            width: 360px;
+            height: 640px;
+            background-color: var(--bg-sage);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        .page {
+            position: absolute;
+            width: 88%;
+            height: 92%;
+            background: var(--card-white);
+            border-radius: 2px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 25px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .active { display: flex; }
+
+        /* Animation for Graphics */
+        .pop-in {
+            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Flower Bloom Animation */
+        .flower-container {
+            height: 180px;
+            width: 200px;
+            position: relative;
+            margin-bottom: 20px;
+            overflow: hidden; /* Clips them so they "grow" upward */
+        }
+
+        .stem {
+            position: absolute;
+            bottom: -150px;
+            animation: bloom 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes bloom {
+            to { bottom: 0; }
+        }
+
+        .typewriter-text {
+            font-size: 1.05rem;
+            color: var(--text-gray);
+            line-height: 1.5;
+            min-height: 50px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .letter-content {
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .btn-container {
+            margin-top: auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .show-btns { opacity: 1; }
+
+        button {
+            background: white;
+            border: 1px solid #d1d1d1;
+            padding: 14px;
+            border-radius: 4px;
+            color: var(--text-gray);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+        }
+
+        svg.drawing { width: 110px; height: 110px; }
+    </style>
+</head>
+<body>
+
+<div class="canvas-frame">
+    <div class="page active" id="p1" data-text="I made a mistake, and I'm truly sorry.">
+        <div class="art-box pop-in" style="height:140px; display:flex; align-items:center;">
+            <svg class="drawing" viewBox="0 0 100 100">
+                <path d="M30 40 Q35 35 40 40 M60 40 Q65 35 70 40" fill="none" stroke="#4a4a4a" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="35" cy="45" r="2.5" fill="#4a4a4a"/>
+                <circle cx="65" cy="45" r="2.5" fill="#4a4a4a"/>
+                <path d="M45 60 Q50 55 55 60" fill="none" stroke="#4a4a4a" stroke-width="2" stroke-linecap="round"/>
+                <path d="M30 55 Q25 65 30 70 M70 55 Q75 65 70 70" fill="none" stroke="#a0c4ff" stroke-width="2.5"/>
+            </svg>
+        </div>
+        <div class="typewriter-text"></div>
+        <div class="btn-container"><button onclick="showPage(2)">Begin</button></div>
+    </div>
+
+    <div class="page" id="p2" data-text="Before We Continue... Take a moment, You don't have to rush this.">
+        <div class="art-box pop-in" style="height:140px; display:flex; align-items:center;">
+            <svg class="drawing" viewBox="0 0 100 100">
+                <path d="M35 40 L45 30 L55 40" fill="none" stroke="#4a4a4a" stroke-width="3"/>
+                <circle cx="30" cy="50" r="8" fill="#ffccd5" opacity="0.6"/>
+                <circle cx="70" cy="50" r="8" fill="#ffccd5" opacity="0.6"/>
+                <path d="M20 70 Q10 60 25 50" fill="none" stroke="#4a4a4a" stroke-width="3"/>
+            </svg>
+        </div>
+        <div class="typewriter-text"></div>
+        <div class="btn-container">
+            <button onclick="showPage(3)">I'm ready to continue</button>
+            <button onclick="showPage(5)">I need more time</button>
+        </div>
+    </div>
+
+    <div class="page" id="p3" data-text="Hello, my girlfriend... I'm writing this with a heavy heart and genuine regret. I know that something I did caused you pain, and I am truly sorry for that. I don't expect my words to erase what happened, but I hope they can at least show how sincere my apology is. Hurting you was never my intention, and realizing that I had stayed distant, I wanted to say sorry in a quiet, honest way without excuses, without demands, just honesty from the heart. Thank you for taking the time to read this.">
+        <div class="letter-content typewriter-text"></div>
+        <div class="btn-container"><button onclick="showPage(4)">Continue</button></div>
+    </div>
+
+    <div class="page" id="p4" data-text="I don't ask for forgiveness, I only hope this letter shows how truly sorry I am.">
+        <div class="flower-container">
+            <svg class="stem" style="left: 30px; animation-delay: 0.1s;" width="50" height="150" viewBox="0 0 50 150">
+                <path d="M25 150 L25 40" stroke="var(--stem-green)" stroke-width="3"/>
+                <path d="M10 40 Q25 0 40 40 Z" fill="#d0e8ff" stroke="#4a4a4a"/>
+            </svg>
+            <svg class="stem" style="left: 75px; animation-delay: 0.3s;" width="50" height="150" viewBox="0 0 50 150">
+                <path d="M25 150 L25 30" stroke="var(--stem-green)" stroke-width="3"/>
+                <path d="M10 30 Q25 -10 40 30 Z" fill="#e8f4ff" stroke="#4a4a4a"/>
+            </svg>
+            <svg class="stem" style="left: 120px; animation-delay: 0.5s;" width="50" height="150" viewBox="0 0 50 150">
+                <path d="M25 150 L25 45" stroke="var(--stem-green)" stroke-width="3"/>
+                <path d="M10 45 Q25 5 40 45 Z" fill="#d0e8ff" stroke="#4a4a4a"/>
+            </svg>
+        </div>
+        <div class="typewriter-text"></div>
+        <div class="btn-container"><button onclick="showPage(1)">Return</button></div>
+    </div>
+
+    <div class="page" id="p5" data-text="No pressure. This space will remain.">
+        <div class="art-box pop-in" style="height:140px; display:flex; align-items:center;">
+            <svg class="drawing" viewBox="0 0 100 100">
+                <circle cx="35" cy="50" r="3" fill="#4a4a4a"/>
+                <circle cx="65" cy="50" r="3" fill="#4a4a4a"/>
+                <path d="M40 70 Q50 80 60 70" fill="none" stroke="#4a4a4a" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <div class="typewriter-text"></div>
+        <div class="btn-container"><button onclick="showPage(1)">Back</button></div>
+    </div>
+</div>
+
+<script>
+    let typingTimer;
+
+    function typeWriter(element, text, i = 0) {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            typingTimer = setTimeout(() => typeWriter(element, text, i + 1), 40);
+        } else {
+            element.nextElementSibling.classList.add('show-btns');
+        }
+    }
+
+    function showPage(pageId) {
+        clearTimeout(typingTimer);
+        document.querySelectorAll('.page').forEach(p => {
+            p.classList.remove('active');
+            const txtBox = p.querySelector('.typewriter-text');
+            const btnBox = p.querySelector('.btn-container');
+            if(txtBox) txtBox.innerHTML = "";
+            if(btnBox) btnBox.classList.remove('show-btns');
+        });
+
+        const activePage = document.getElementById('p' + pageId);
+        activePage.classList.add('active');
+        
+        const fullText = activePage.getAttribute('data-text');
+        const targetElement = activePage.querySelector('.typewriter-text');
+        
+        // Wait for flower bloom (1.5s) then start typing
+        let delay = (pageId === 4) ? 1500 : 800;
+        setTimeout(() => {
+            typeWriter(targetElement, fullText);
+        }, delay);
+    }
+
+    window.onload = () => {
+        const firstPage = document.getElementById('p1');
+        typeWriter(firstPage.querySelector('.typewriter-text'), firstPage.getAttribute('data-text'));
+    };
+</script>
+
+</body>
+</html>
